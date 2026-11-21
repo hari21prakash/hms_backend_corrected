@@ -259,17 +259,14 @@ if (app.Configuration.GetValue("ForwardedHeaders:Enabled", true))
 app.UseMiddleware<ExceptionHandlingMiddleware>();
 app.UseMiddleware<SecurityHeadersMiddleware>();
 
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
-else
+app.UseSwagger();
+app.UseSwaggerUI();
+
+if (!app.Environment.IsDevelopment())
 {
     app.UseHsts();
     app.UseHttpsRedirection();
 }
-
 app.UseCors(CorsPolicies.Frontend);
 app.UseRateLimiter();
 app.UseAuthentication();
